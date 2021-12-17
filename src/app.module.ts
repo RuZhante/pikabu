@@ -6,7 +6,8 @@ import { UserModule } from './user/user.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import configuration from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import ormconfig from 'ormconfig';
+import ormconfig from 'src/ormconfig';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import ormconfig from 'ormconfig';
       isGlobal: true,
       load: [configuration],
     }),
-
+    AuthModule,
     UserModule,
   ],
   controllers: [AppController],

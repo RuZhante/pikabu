@@ -16,6 +16,26 @@ type UserModel {
   password: String!
 }
 
+type PostModel {
+  """Id of the Post"""
+  id: Int!
+
+  """Title of the Post"""
+  title: String!
+
+  """Description of the Post"""
+  description: String!
+
+  """Image of the Post"""
+  image: String!
+
+  """Tag of the Post"""
+  tag: Int!
+
+  """UserId of the Post"""
+  userId: Int!
+}
+
 type Query {
   users: [UserModel!]!
   user(id: Int!): UserModel!
@@ -25,6 +45,9 @@ type Mutation {
   createUser(createUserDto: CreateUserDto!): UserModel!
   updateUser(updateUserDto: UpdateUserDto!): UserModel!
   removeUser(id: Int!): UserModel!
+  createPost(createPostDto: CreatePostDto!): PostModel!
+  updatePost(updatePostDto: UpdatePostDto!): PostModel!
+  removePost(id: Int!): PostModel!
 }
 
 input CreateUserDto {
@@ -47,5 +70,28 @@ input UpdateUserDto {
 
   """Password of the user"""
   password: String
+  id: Int!
+}
+
+input CreatePostDto {
+  """Title of the post"""
+  title: String!
+
+  """Description of the post"""
+  description: String!
+
+  """Image of the post"""
+  image: String!
+}
+
+input UpdatePostDto {
+  """Title of the post"""
+  title: String
+
+  """Description of the post"""
+  description: String
+
+  """Image of the post"""
+  image: String
   id: Int!
 }
