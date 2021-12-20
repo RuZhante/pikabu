@@ -33,8 +33,6 @@ export class UserService {
   async update(updateUserDto: UpdateUserDto): Promise<UserEntity> {
     const user = await this.userRepository.save(updateUserDto);
 
-    // console.log(user);
-
     return this.userRepository.findOne(user.id);
   }
 

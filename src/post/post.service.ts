@@ -38,4 +38,12 @@ export class PostService {
       user: post.user,
     };
   }
+
+  async findAll(): Promise<PostEntity[]> {
+    return await this.postRepository.find();
+  }
+
+  async findOne(postId: number): Promise<PostEntity> {
+    return await this.postRepository.findOne(postId);
+  }
 }

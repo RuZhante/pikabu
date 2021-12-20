@@ -16,6 +16,11 @@ type UserModel {
   password: String!
 }
 
+type AccessTokenModel {
+  """Access Token"""
+  access_token: String!
+}
+
 type PostModel {
   """Id of the Post"""
   id: Int!
@@ -39,6 +44,17 @@ type PostModel {
 type Query {
   users: [UserModel!]!
   user(id: Int!): UserModel!
+  loginUser(loginUserDto: LoginUserDto!): AccessTokenModel!
+  posts: [PostModel!]!
+  post(id: Int!): PostModel!
+}
+
+input LoginUserDto {
+  """Username of the user"""
+  username: String!
+
+  """Username of the user"""
+  password: String!
 }
 
 type Mutation {
