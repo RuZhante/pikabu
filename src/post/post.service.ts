@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostEntity } from './post.entity';
@@ -25,18 +25,9 @@ export class PostService {
     return await this.postRepository.save(updatePostDto);
   }
 
-  async remove(postId: number): Promise<PostEntity> {
-    const post = await this.postRepository.findOne({ id: postId });
-    await this.postRepository.remove(post);
-    return {
-      id: postId,
-      title: post.title,
-      description: post.description,
-      userId: post.id,
-      image: post.image,
-      tag: post.tag,
-      user: post.user,
-    };
+  async remove(postId: number): Promise<DeleteResult> {
+    const post = await this.postRepository.findOne(postId);
+    return await this.postRepository.delete(post);
   }
 
   async findAll(): Promise<PostEntity[]> {

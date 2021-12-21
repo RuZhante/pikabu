@@ -2,6 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type DeleteResultModel {
+  affected: Float
+}
+
 type UserModel {
   """Id of the user"""
   id: Int!
@@ -21,6 +25,34 @@ type AccessTokenModel {
   access_token: String!
 }
 
+type CommentModel {
+  """Id of the comment"""
+  id: Int!
+
+  """Text of the comment"""
+  text: String!
+
+  """Image of the comment"""
+  image: String
+
+  """PostId of the comment"""
+  postId: Int!
+
+  """UserId of the comment"""
+  userId: Int!
+
+  """Date of the comment created"""
+  createdAt: DateTime!
+
+  """Date of the comment updated"""
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type PostModel {
   """Id of the Post"""
   id: Int!
@@ -32,10 +64,10 @@ type PostModel {
   description: String!
 
   """Image of the Post"""
-  image: String!
+  image: String
 
   """Tag of the Post"""
-  tag: Int!
+  tag: Int
 
   """UserId of the Post"""
   userId: Int!
@@ -47,6 +79,8 @@ type Query {
   loginUser(loginUserDto: LoginUserDto!): AccessTokenModel!
   posts: [PostModel!]!
   post(id: Int!): PostModel!
+  comments: [CommentModel!]!
+  comment(id: Int!): CommentModel!
 }
 
 input LoginUserDto {
@@ -60,10 +94,13 @@ input LoginUserDto {
 type Mutation {
   createUser(createUserDto: CreateUserDto!): UserModel!
   updateUser(updateUserDto: UpdateUserDto!): UserModel!
-  removeUser(id: Int!): UserModel!
+  removeUser(id: Int!): DeleteResultModel!
   createPost(createPostDto: CreatePostDto!): PostModel!
   updatePost(updatePostDto: UpdatePostDto!): PostModel!
-  removePost(id: Int!): PostModel!
+  removePost(id: Int!): DeleteResultModel!
+  createComment(createCommentDto: CreateCommentDto!): CommentModel!
+  updateComment(updateCommentDto: UpdateCommentDto!): CommentModel!
+  removeComment(id: Int!): DeleteResultModel!
 }
 
 input CreateUserDto {
@@ -97,7 +134,7 @@ input CreatePostDto {
   description: String!
 
   """Image of the post"""
-  image: String!
+  image: String
 }
 
 input UpdatePostDto {
@@ -109,5 +146,30 @@ input UpdatePostDto {
 
   """Image of the post"""
   image: String
+  id: Int!
+}
+
+input CreateCommentDto {
+  """Text of the comment"""
+  text: String!
+
+  """Image of the comment"""
+  image: String
+
+  """PostId of the comment"""
+  postId: Int!
+}
+
+input UpdateCommentDto {
+  """Text of the comment"""
+  text: String
+
+  """Image of the comment"""
+  image: String
+
+  """PostId of the comment"""
+  postId: Int
+
+  """Id of the comment"""
   id: Int!
 }

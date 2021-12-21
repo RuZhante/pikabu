@@ -2,10 +2,10 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Int, Query, Resolver } from '@nestjs/graphql';
 import { AuthService } from 'src/auth/auth.service';
 import { GqlAuthGuard } from 'src/auth/guards/graphql-auth.guard';
-import { AccessTokenModel } from '../auth/access-token.graphql';
-import { LoginUserDto } from './dto/login-user.dto';
-import { UserModel } from './user.graphql';
-import { UserService } from './user.service';
+import { AccessTokenModel } from '../../auth/access-token.graphql';
+import { LoginUserDto } from '../dto/login-user.dto';
+import { UserModel } from '../graphql.models/user.graphql';
+import { UserService } from '../user.service';
 
 @Resolver(() => UserModel)
 export class UserQueryResolver {

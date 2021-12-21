@@ -1,8 +1,8 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Int, Query, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/guards/graphql-auth.guard';
-import { PostModel } from './post.graphql';
-import { PostService } from './post.service';
+import { PostModel } from '../graphql.models/post.graphql';
+import { PostService } from '../post.service';
 
 @Resolver(() => PostModel)
 export class PostQueryResolver {

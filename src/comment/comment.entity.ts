@@ -1,31 +1,27 @@
-import { CommentEntity } from 'src/comment/comment.entity';
+import { PostEntity } from 'src/post/post.entity';
 import { UserEntity } from 'src/user/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'posts' })
-export class PostEntity {
+@Entity({ name: 'comments' })
+export class CommentEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  title: string;
-
-  @Column()
-  description: string;
+  text: string;
 
   @Column({ nullable: true })
   image: string;
 
-  @Column({ nullable: true })
-  tag: number;
+  @Column()
+  postId: number;
 
   @Column()
   userId: number;
@@ -36,9 +32,9 @@ export class PostEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.posts)
-  user: UserEntity;
+  @ManyToOne(() => PostEntity, (post) => post.comments)
+  post: PostEntity;
 
-  @OneToMany(() => CommentEntity, (comment) => comment.post)
-  comments: CommentEntity[];
+  @ManyToOne(() => UserEntity, (user) => user.comments)
+  user: UserEntity;
 }

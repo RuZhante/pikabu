@@ -13,6 +13,6 @@ export class CreatePostDto {
   @Field(() => String, { description: 'Description of the post' })
   description: string;
 
-  @Field(() => String, { description: 'Image of the post' })
+  @Field(() => String, { description: 'Image of the post', nullable: true })
   image: string;
 }
