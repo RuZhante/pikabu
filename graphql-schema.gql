@@ -25,6 +25,17 @@ type AccessTokenModel {
   access_token: String!
 }
 
+type LikePostModel {
+  """Id of the Like"""
+  id: Int!
+
+  """UserId of the Like"""
+  userId: Int!
+
+  """PostId of the Like"""
+  postId: Int!
+}
+
 type CommentModel {
   """Id of the comment"""
   id: Int!
@@ -73,7 +84,7 @@ type PostModel {
   userId: Int!
 
   """Count Likes of the Post"""
-  countLikes: Int!
+  countLikes: Int
 
   """Date of the Post created"""
   createdAt: DateTime!
@@ -136,6 +147,7 @@ type Mutation {
   createComment(createCommentDto: CreateCommentDto!): CommentModel!
   updateComment(updateCommentDto: UpdateCommentDto!): CommentModel!
   removeComment(id: Int!): DeleteResultModel!
+  likePost(id: Int!): LikePostModel!
 }
 
 input CreateUserDto {

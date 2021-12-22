@@ -20,7 +20,7 @@ export class PostModel {
   @Field(() => Int, { description: 'UserId of the Post' })
   userId: number;
 
-  @Field(() => Int, { description: 'Count Likes of the Post' })
+  @Field(() => Int, { description: 'Count Likes of the Post', nullable: true })
   countLikes: number;
 
   @Field(() => Date, { description: 'Date of the Post created' })

@@ -46,6 +46,6 @@ export class PostEntity {
   @OneToMany(() => LikePostEntity, (postLike) => postLike.post)
   postLikes: LikePostEntity[];
 
-  @Column()
+  @Column({ nullable: true })
   countLikes: number;
 }
