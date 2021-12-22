@@ -71,6 +71,15 @@ type PostModel {
 
   """UserId of the Post"""
   userId: Int!
+
+  """Count Likes of the Post"""
+  countLikes: Int!
+
+  """Date of the Post created"""
+  createdAt: DateTime!
+
+  """Date of the Post updated"""
+  updatedAt: DateTime!
 }
 
 type Query {
@@ -79,8 +88,10 @@ type Query {
   loginUser(loginUserDto: LoginUserDto!): AccessTokenModel!
   posts: [PostModel!]!
   post(id: Int!): PostModel!
+  postPagination(postPaginationDto: PostPaginationDto!): [PostModel!]!
   comments: [CommentModel!]!
   comment(id: Int!): CommentModel!
+  commentPagination(commentPaginationDto: CommentPaginationDto!): [CommentModel!]!
 }
 
 input LoginUserDto {
@@ -89,6 +100,30 @@ input LoginUserDto {
 
   """Username of the user"""
   password: String!
+}
+
+input PostPaginationDto {
+  """OFFSET and LIMIT"""
+  pagination: PaginationDto!
+
+  """Title of the post"""
+  title: String
+}
+
+input PaginationDto {
+  """OFFSET"""
+  skip: Int!
+
+  """LIMIT"""
+  take: Int!
+}
+
+input CommentPaginationDto {
+  """OFFSET and LIMIT"""
+  pagination: PaginationDto!
+
+  """PostId of the comment"""
+  postId: Int!
 }
 
 type Mutation {

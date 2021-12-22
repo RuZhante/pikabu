@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { CommentEntity } from './comment.entity';
+import { CommentPaginationDto } from './dto/comment-pagination.dto';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 
@@ -36,5 +37,26 @@ export class CommentService {
 
   async findOne(commentId: number): Promise<CommentEntity> {
     return await this.commentRepository.findOne(commentId);
+  }
+
+  async commentPagination(
+    commentPaginationDto: CommentPaginationDto,
+  ): Promise<CommentEntity[]> {
+    const qb = this.commentRepository
+      .createQueryBuilder('comments')
+      .where('comments.postId = :postId', {
+        postId: commentPaginationDto.postId,
+      });
+
+    if (commentPaginationDto.pagination.skip)
+      qb.skip(commentPaginationDto.pagination.skip);
+
+    if (commentPaginationDto.pagination.take)
+      qb.take(commentPaginationDto.pagination.take);
+
+    qb.orderBy('comments.createdAt', 'DESC');
+
+    const comments = qb.getMany();
+    return comments;
   }
 }

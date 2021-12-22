@@ -1,4 +1,5 @@
 import { CommentEntity } from 'src/comment/comment.entity';
+import { LikePostEntity } from 'src/like/like-post.entity';
 import { UserEntity } from 'src/user/user.entity';
 import {
   Column,
@@ -41,4 +42,10 @@ export class PostEntity {
 
   @OneToMany(() => CommentEntity, (comment) => comment.post)
   comments: CommentEntity[];
+
+  @OneToMany(() => LikePostEntity, (postLike) => postLike.post)
+  postLikes: LikePostEntity[];
+
+  @Column()
+  countLikes: number;
 }
