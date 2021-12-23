@@ -25,15 +25,18 @@ type AccessTokenModel {
   access_token: String!
 }
 
-type LikePostModel {
-  """Id of the Like"""
+type ReactionModel {
+  """Id of the Reaction"""
   id: Int!
 
-  """UserId of the Like"""
+  """UserId of the Reaction"""
   userId: Int!
 
-  """PostId of the Like"""
+  """PostId of the Reaction"""
   postId: Int!
+
+  """Reaction LIKE/DISLIKE"""
+  reaction: String!
 }
 
 type CommentModel {
@@ -83,9 +86,6 @@ type PostModel {
   """UserId of the Post"""
   userId: Int!
 
-  """Count Likes of the Post"""
-  countLikes: Int
-
   """Date of the Post created"""
   createdAt: DateTime!
 
@@ -119,6 +119,9 @@ input PostPaginationDto {
 
   """Title of the post"""
   title: String
+
+  """Count likes of the post"""
+  countLikes: Boolean
 }
 
 input PaginationDto {
@@ -147,7 +150,7 @@ type Mutation {
   createComment(createCommentDto: CreateCommentDto!): CommentModel!
   updateComment(updateCommentDto: UpdateCommentDto!): CommentModel!
   removeComment(id: Int!): DeleteResultModel!
-  likePost(id: Int!): LikePostModel!
+  reactionPost(reactionDto: ReactionDto!): ReactionModel!
 }
 
 input CreateUserDto {
@@ -219,4 +222,18 @@ input UpdateCommentDto {
 
   """Id of the comment"""
   id: Int!
+}
+
+input ReactionDto {
+  """UserId of the reaction"""
+  postId: Int!
+
+  """Type of the reaction"""
+  reaction: ReactionType!
+}
+
+"""The supported reaction."""
+enum ReactionType {
+  LIKE
+  DISLIKE
 }

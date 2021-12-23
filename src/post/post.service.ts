@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, getManager, Like, Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostPaginationDto } from './dto/post-pagination.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -42,7 +42,7 @@ export class PostService {
   async postPagination(
     postPaginationDto: PostPaginationDto,
   ): Promise<PostEntity | PostEntity[]> {
-    const qb = await this.postRepository.createQueryBuilder('posts');
+    const qb = this.postRepository.createQueryBuilder('posts');
 
     if (postPaginationDto.pagination.skip)
       qb.skip(postPaginationDto.pagination.skip);
@@ -55,8 +55,17 @@ export class PostService {
         title: postPaginationDto.title,
       });
 
-    qb.orderBy('posts.createdAt', 'DESC');
+    if (postPaginationDto.countLikes) {
+      const result = await getManager().query(`
+      select "posts"."id", sum(case reaction when 'LIKE' then 1 else 0 end) as raiting from posts
+      left join reactions on "posts"."id" = "reactions"."postId"
+      group by "posts"."id"
+      order by raiting desc
+    `);
+      return result;
+    }
 
+    qb.orderBy('posts.createdAt', 'DESC');
     const posts = qb.getMany();
     return posts;
   }

@@ -1,8 +1,8 @@
 import { PostEntity } from 'src/post/post.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'postLikes' })
-export class LikePostEntity {
+@Entity({ name: 'reactions' })
+export class ReactionEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -12,6 +12,9 @@ export class LikePostEntity {
   @Column()
   postId: number;
 
-  @ManyToOne(() => PostEntity, (post) => post.postLikes)
+  @Column()
+  reaction: string;
+
+  @ManyToOne(() => PostEntity, (post) => post.reactions)
   post: PostEntity;
 }

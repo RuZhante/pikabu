@@ -8,4 +8,10 @@ export class PostPaginationDto {
 
   @Field(() => String, { description: 'Title of the post', nullable: true })
   title?: string;
+
+  @Field(() => Boolean, {
+    description: 'Count likes of the post',
+    nullable: true,
+  })
+  countLikes?: boolean;
 }
