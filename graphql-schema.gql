@@ -33,7 +33,10 @@ type ReactionModel {
   userId: Int!
 
   """PostId of the Reaction"""
-  postId: Int!
+  postId: Int
+
+  """CommentId of the Reaction"""
+  commentId: Int
 
   """Reaction LIKE/DISLIKE"""
   reaction: String!
@@ -150,7 +153,8 @@ type Mutation {
   createComment(createCommentDto: CreateCommentDto!): CommentModel!
   updateComment(updateCommentDto: UpdateCommentDto!): CommentModel!
   removeComment(id: Int!): DeleteResultModel!
-  reactionPost(reactionDto: ReactionDto!): ReactionModel!
+  reactionPost(reactionPostDto: ReactionPostDto!): ReactionModel!
+  reactionComment(reactionCommentDto: ReactionCommentDto!): ReactionModel!
 }
 
 input CreateUserDto {
@@ -224,8 +228,8 @@ input UpdateCommentDto {
   id: Int!
 }
 
-input ReactionDto {
-  """UserId of the reaction"""
+input ReactionPostDto {
+  """PostId of the reaction"""
   postId: Int!
 
   """Type of the reaction"""
@@ -236,4 +240,12 @@ input ReactionDto {
 enum ReactionType {
   LIKE
   DISLIKE
+}
+
+input ReactionCommentDto {
+  """CommentId of the reaction"""
+  commentId: Int!
+
+  """Type of the reaction"""
+  reaction: ReactionType!
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, getManager, Like, Repository } from 'typeorm';
+import { ReactionEntity } from 'src/reaction/reaction.entity';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostPaginationDto } from './dto/post-pagination.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -56,17 +57,25 @@ export class PostService {
       });
 
     if (postPaginationDto.countLikes) {
-      const result = await getManager().query(`
-      select "posts"."id", sum(case reaction when 'LIKE' then 1 else 0 end) as raiting from posts
-      left join reactions on "posts"."id" = "reactions"."postId"
-      group by "posts"."id"
-      order by raiting desc
-    `);
-      return result;
+      const posts = qb
+        .leftJoinAndSelect(
+          ReactionEntity,
+          'reactions',
+          'reactions.postId = posts.id',
+        )
+        // .addSelect('SUM(reactions.reaction)', 'sum')
+        .groupBy('posts.id')
+        .getRawMany();
+
+      return posts;
     }
 
-    qb.orderBy('posts.createdAt', 'DESC');
     const posts = qb.getMany();
     return posts;
   }
 }
+
+// select "posts"."id", sum(case reaction when 'LIKE' then 1 else 0 end) as raiting from posts
+//       left join reactions on "posts"."id" = "reactions"."postId"
+//       group by "posts"."id"
+//       order by raiting desc

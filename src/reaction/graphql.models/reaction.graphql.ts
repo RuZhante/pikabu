@@ -8,8 +8,14 @@ export class ReactionModel {
   @Field(() => Int, { description: 'UserId of the Reaction' })
   userId: number;
 
-  @Field(() => Int, { description: 'PostId of the Reaction' })
+  @Field(() => Int, { description: 'PostId of the Reaction', nullable: true })
   postId: number;
+
+  @Field(() => Int, {
+    description: 'CommentId of the Reaction',
+    nullable: true,
+  })
+  commentId: number;
 
   @Field(() => String, { description: 'Reaction LIKE/DISLIKE' })
   reaction: string;

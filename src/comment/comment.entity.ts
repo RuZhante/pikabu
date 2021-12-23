@@ -1,10 +1,12 @@
 import { PostEntity } from 'src/post/post.entity';
+import { ReactionEntity } from 'src/reaction/reaction.entity';
 import { UserEntity } from 'src/user/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -37,4 +39,7 @@ export class CommentEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.comments)
   user: UserEntity;
+
+  @OneToMany(() => ReactionEntity, (reaction) => reaction.comment)
+  reactions: ReactionEntity[];
 }
