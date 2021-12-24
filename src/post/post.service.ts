@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ReactionEntity } from 'src/reaction/reaction.entity';
 import { DeleteResult, Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostPaginationDto } from './dto/post-pagination.dto';
@@ -57,20 +56,22 @@ export class PostService {
       });
 
     if (postPaginationDto.countLikes) {
-      const posts = qb
-        .leftJoinAndSelect(
-          ReactionEntity,
-          'reactions',
-          'reactions.postId = posts.id',
-        )
-        // .addSelect('SUM(reactions.reaction)', 'sum')
-        .groupBy('posts.id')
-        .getRawMany();
+      qb.leftJoin('posts.reactions', 'reactions');
+      qb.groupBy('posts.id');
+      qb.select(
+        `posts.id as id, posts.title as title, sum(case reaction when 'LIKE' then 1 else 0 end) as raiting`,
+      );
+      qb.orderBy('raiting');
 
+      const posts = await qb.execute();
+      console.log(423423423423, posts);
       return posts;
     }
 
-    const posts = qb.getMany();
+    qb.orderBy('posts.createdAt', 'DESC');
+
+    const posts = await qb.getMany();
+
     return posts;
   }
 }

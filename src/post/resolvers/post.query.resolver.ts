@@ -23,7 +23,7 @@ export class PostQueryResolver {
 
   @Query(() => [PostModel], { name: 'postPagination' })
   @UseGuards(GqlAuthGuard)
-  findPagination(
+  postPagination(
     @Args('postPaginationDto', { type: () => PostPaginationDto })
     postPaginationDto: PostPaginationDto,
   ) {

@@ -25,6 +25,20 @@ type AccessTokenModel {
   access_token: String!
 }
 
+type BookmarkModel {
+  """Id of the bookmark"""
+  id: Int!
+
+  """UserId of the bookmark"""
+  userid: Int!
+
+  """PostId of the bookmark"""
+  postId: Int
+
+  """CommentId of the bookmark"""
+  commentId: Int
+}
+
 type ReactionModel {
   """Id of the Reaction"""
   id: Int!
@@ -106,6 +120,7 @@ type Query {
   comments: [CommentModel!]!
   comment(id: Int!): CommentModel!
   commentPagination(commentPaginationDto: CommentPaginationDto!): [CommentModel!]!
+  paginationBookmark(paginationBookmarkDto: PaginationBookmarkDto!): [BookmarkModel!]!
 }
 
 input LoginUserDto {
@@ -143,6 +158,17 @@ input CommentPaginationDto {
   postId: Int!
 }
 
+input PaginationBookmarkDto {
+  """Post of the bookmark"""
+  post: Boolean
+
+  """Comment of the bookmak"""
+  comment: Boolean
+
+  """Take/Skip"""
+  pagination: PaginationDto!
+}
+
 type Mutation {
   createUser(createUserDto: CreateUserDto!): UserModel!
   updateUser(updateUserDto: UpdateUserDto!): UserModel!
@@ -155,6 +181,10 @@ type Mutation {
   removeComment(id: Int!): DeleteResultModel!
   reactionPost(reactionPostDto: ReactionPostDto!): ReactionModel!
   reactionComment(reactionCommentDto: ReactionCommentDto!): ReactionModel!
+  addPostInBookmark(postBookmarkDto: PostBookmarkDto!): BookmarkModel!
+  removePostInBookmark(postBookmarkDto: PostBookmarkDto!): DeleteResultModel!
+  addCommentInBookmark(commentBookmarkDto: CommentBookmarkDto!): BookmarkModel!
+  removeCommentInBookmark(commentBookmarkDto: CommentBookmarkDto!): DeleteResultModel!
 }
 
 input CreateUserDto {
@@ -248,4 +278,14 @@ input ReactionCommentDto {
 
   """Type of the reaction"""
   reaction: ReactionType!
+}
+
+input PostBookmarkDto {
+  """PostId of the bookmark"""
+  postId: Int!
+}
+
+input CommentBookmarkDto {
+  """CommentId of the bookmark"""
+  commentId: Int!
 }

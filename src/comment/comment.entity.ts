@@ -1,3 +1,4 @@
+import { BookmarkEntity } from 'src/bookmark/bookmark.entity';
 import { PostEntity } from 'src/post/post.entity';
 import { ReactionEntity } from 'src/reaction/reaction.entity';
 import { UserEntity } from 'src/user/user.entity';
@@ -42,4 +43,7 @@ export class CommentEntity {
 
   @OneToMany(() => ReactionEntity, (reaction) => reaction.comment)
   reactions: ReactionEntity[];
+
+  @OneToMany(() => BookmarkEntity, (bookmark) => bookmark.comment)
+  bookmarks: BookmarkEntity[];
 }
