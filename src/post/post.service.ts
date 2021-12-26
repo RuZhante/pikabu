@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { TagEntity } from 'src/tag/tag.entity';
+import { DeleteResult, getRepository, Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostPaginationDto } from './dto/post-pagination.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -66,6 +67,22 @@ export class PostService {
 
       console.log(423423423423, posts);
       return posts;
+    }
+
+    if (postPaginationDto.tag) {
+      const tagRepo = getRepository(TagEntity);
+      const tag = await tagRepo.findOne({
+        where: { tagName: postPaginationDto.tag },
+        relations: ['posts'],
+      });
+
+      const ids = tag.posts.map((post) => post.id);
+
+      if (ids.length > 0) {
+        qb.andWhere('posts.id IN (:...ids)', { ids });
+      } else {
+        qb.andWhere('1=0');
+      }
     }
 
     qb.orderBy('posts.createdAt', 'DESC');

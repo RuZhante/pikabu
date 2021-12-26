@@ -14,4 +14,7 @@ export class PostPaginationDto {
     nullable: true,
   })
   countLikes?: boolean;
+
+  @Field(() => String, { description: 'TagName of the tag' })
+  tag: string;
 }
