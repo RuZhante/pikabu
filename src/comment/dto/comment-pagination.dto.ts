@@ -8,4 +8,10 @@ export class CommentPaginationDto {
 
   @Field(() => Int, { description: 'PostId of the comment' })
   postId: number;
+
+  @Field(() => Boolean, {
+    description: 'Count likes of the comment',
+    nullable: true,
+  })
+  countLikes?: boolean;
 }

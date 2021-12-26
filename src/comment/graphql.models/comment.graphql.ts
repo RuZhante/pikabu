@@ -17,6 +17,12 @@ export class CommentModel {
   @Field(() => Int, { description: 'UserId of the comment' })
   userId: number;
 
+  @Field(() => Int, {
+    description: 'Count likes of the comment',
+    nullable: true,
+  })
+  raiting: number;
+
   @Field(() => Date, { description: 'Date of the comment created' })
   createdAt: Date;
 

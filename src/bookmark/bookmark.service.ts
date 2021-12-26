@@ -87,7 +87,10 @@ export class BookmarkService {
       qb.andWhere({
         postId: Not(IsNull()),
       });
-    if (paginationBookmarkDto.comment) qb.select('bookmarks.commentId');
+    if (paginationBookmarkDto.comment)
+      qb.andWhere({
+        commentId: Not(IsNull()),
+      });
 
     if (paginationBookmarkDto.pagination.skip)
       qb.skip(paginationBookmarkDto.pagination.skip);
@@ -100,6 +103,7 @@ export class BookmarkService {
     // const bookmarks = await qb.execute();
     // console.log(bookmarks);
 
-    return qb.getMany();
+    const bookmarks = qb.getMany();
+    return bookmarks;
   }
 }

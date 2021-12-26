@@ -72,6 +72,9 @@ type CommentModel {
   """UserId of the comment"""
   userId: Int!
 
+  """Count likes of the comment"""
+  raiting: Int
+
   """Date of the comment created"""
   createdAt: DateTime!
 
@@ -102,6 +105,9 @@ type PostModel {
 
   """UserId of the Post"""
   userId: Int!
+
+  """Count likes of the Post"""
+  raiting: Int
 
   """Date of the Post created"""
   createdAt: DateTime!
@@ -156,6 +162,9 @@ input CommentPaginationDto {
 
   """PostId of the comment"""
   postId: Int!
+
+  """Count likes of the comment"""
+  countLikes: Boolean
 }
 
 input PaginationBookmarkDto {

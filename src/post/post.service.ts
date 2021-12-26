@@ -59,11 +59,11 @@ export class PostService {
       qb.leftJoin('posts.reactions', 'reactions');
       qb.groupBy('posts.id');
       qb.select(
-        `posts.id as id, posts.title as title, sum(case reaction when 'LIKE' then 1 else 0 end) as raiting`,
+        `posts.id as id, posts.userId as userId, posts.title as title, posts.description as description, posts.image as image, sum(case reaction when 'LIKE' then 1 else 0 end) as raiting`,
       );
-      qb.orderBy('raiting');
-
+      qb.orderBy('raiting', 'DESC');
       const posts = await qb.execute();
+
       console.log(423423423423, posts);
       return posts;
     }
@@ -75,8 +75,3 @@ export class PostService {
     return posts;
   }
 }
-
-// select "posts"."id", sum(case reaction when 'LIKE' then 1 else 0 end) as raiting from posts
-//       left join reactions on "posts"."id" = "reactions"."postId"
-//       group by "posts"."id"
-//       order by raiting desc

@@ -54,6 +54,19 @@ export class CommentService {
     if (commentPaginationDto.pagination.take)
       qb.take(commentPaginationDto.pagination.take);
 
+    if (commentPaginationDto.countLikes) {
+      qb.leftJoin('comments.reactions', 'reactions');
+      qb.groupBy('comments.id');
+      qb.select(
+        `comments.id as id, comments.postId as postId, comments.userId as userId, comments.text as text, comments.image as image, sum(case reaction when 'LIKE' then 1 else 0 end) as raiting`,
+      );
+      qb.orderBy('raiting', 'DESC');
+      const comments = await qb.execute();
+
+      console.log(423423423423, comments);
+      return comments;
+    }
+
     qb.orderBy('comments.createdAt', 'DESC');
 
     const comments = qb.getMany();
