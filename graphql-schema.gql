@@ -100,9 +100,6 @@ type PostModel {
   """Image of the Post"""
   image: String
 
-  """Tag of the Post"""
-  tag: Int
-
   """UserId of the Post"""
   userId: Int!
 
@@ -114,6 +111,14 @@ type PostModel {
 
   """Date of the Post updated"""
   updatedAt: DateTime!
+}
+
+type TagModel {
+  """Id of the tag"""
+  id: Int!
+
+  """Name of the tag"""
+  tagName: String!
 }
 
 type Query {
@@ -194,6 +199,8 @@ type Mutation {
   removePostInBookmark(postBookmarkDto: PostBookmarkDto!): DeleteResultModel!
   addCommentInBookmark(commentBookmarkDto: CommentBookmarkDto!): BookmarkModel!
   removeCommentInBookmark(commentBookmarkDto: CommentBookmarkDto!): DeleteResultModel!
+  addTagtoPost(postTagDto: PostTagDto!): TagModel!
+  removeTagtoPost(postTagDto: PostTagDto!): TagModel!
 }
 
 input CreateUserDto {
@@ -297,4 +304,12 @@ input PostBookmarkDto {
 input CommentBookmarkDto {
   """CommentId of the bookmark"""
   commentId: Int!
+}
+
+input PostTagDto {
+  """PostId of the Post"""
+  postId: Int!
+
+  """TagId of the Tag"""
+  tagId: Int!
 }

@@ -14,9 +14,6 @@ export class PostModel {
   @Field(() => String, { description: 'Image of the Post', nullable: true })
   image: string;
 
-  @Field(() => Int, { description: 'Tag of the Post', nullable: true })
-  tag: number;
-
   @Field(() => Int, { description: 'UserId of the Post' })
   userId: number;
 

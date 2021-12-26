@@ -5,9 +5,10 @@ import { PostEntity } from './post.entity';
 import { PostMutationResolver } from './resolvers/post.mutation.resolver';
 import { PostQueryResolver } from './resolvers/post.query.resolver';
 import { PostService } from './post.service';
+import { TagModule } from 'src/tag/tag.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PostEntity]), CommentModule],
+  imports: [TypeOrmModule.forFeature([PostEntity]), CommentModule, TagModule],
   providers: [PostService, PostMutationResolver, PostQueryResolver],
   exports: [PostService],
 })

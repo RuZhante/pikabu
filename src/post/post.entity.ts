@@ -1,11 +1,13 @@
 import { BookmarkEntity } from 'src/bookmark/bookmark.entity';
 import { CommentEntity } from 'src/comment/comment.entity';
 import { ReactionEntity } from 'src/reaction/reaction.entity';
+import { TagEntity } from 'src/tag/tag.entity';
 import { UserEntity } from 'src/user/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -25,9 +27,6 @@ export class PostEntity {
 
   @Column({ nullable: true })
   image: string;
-
-  @Column({ nullable: true })
-  tag: number;
 
   @Column()
   userId: number;
@@ -49,4 +48,7 @@ export class PostEntity {
 
   @OneToMany(() => BookmarkEntity, (bookmark) => bookmark.post)
   bookmarks: BookmarkEntity[];
+
+  @ManyToMany(() => TagEntity, (tag) => tag.posts)
+  tags: TagEntity[];
 }
