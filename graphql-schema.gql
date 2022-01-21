@@ -25,37 +25,6 @@ type AccessTokenModel {
   access_token: String!
 }
 
-type BookmarkModel {
-  """Id of the bookmark"""
-  id: Int!
-
-  """UserId of the bookmark"""
-  userid: Int!
-
-  """PostId of the bookmark"""
-  postId: Int
-
-  """CommentId of the bookmark"""
-  commentId: Int
-}
-
-type ReactionModel {
-  """Id of the Reaction"""
-  id: Int!
-
-  """UserId of the Reaction"""
-  userId: Int!
-
-  """PostId of the Reaction"""
-  postId: Int
-
-  """CommentId of the Reaction"""
-  commentId: Int
-
-  """Reaction LIKE/DISLIKE"""
-  reaction: String!
-}
-
 type CommentModel {
   """Id of the comment"""
   id: Int!
@@ -111,6 +80,43 @@ type PostModel {
 
   """Date of the Post updated"""
   updatedAt: DateTime!
+}
+
+type BookmarkModel {
+  """Id of the bookmark"""
+  id: Int!
+
+  """UserId of the bookmark"""
+  userid: Int!
+
+  """PostId of the bookmark"""
+  postId: Int
+
+  """Post Model"""
+  post: PostModel
+
+  """CommentId of the bookmark"""
+  commentId: Int
+
+  """Comment Model"""
+  comment: CommentModel
+}
+
+type ReactionModel {
+  """Id of the Reaction"""
+  id: Int!
+
+  """UserId of the Reaction"""
+  userId: Int!
+
+  """PostId of the Reaction"""
+  postId: Int
+
+  """CommentId of the Reaction"""
+  commentId: Int
+
+  """Reaction LIKE/DISLIKE"""
+  reaction: String!
 }
 
 type TagModel {

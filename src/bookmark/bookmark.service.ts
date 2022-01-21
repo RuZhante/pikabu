@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, IsNull, Not, Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { BookmarkEntity } from './bookmark.entity';
 import { CommentBookmarkDto } from './dto/comment-bookmark.dto';
 import { PaginationBookmarkDto } from './dto/pagination-bookmark.dto';
@@ -79,18 +79,17 @@ export class BookmarkService {
     userId: number,
     paginationBookmarkDto: PaginationBookmarkDto,
   ): Promise<BookmarkEntity[]> {
-    const qb = await this.bookmarkRepository
-      .createQueryBuilder('bookmarks')
-      .where('bookmarks.userId = :userId', { userId: userId });
+    const qb = this.bookmarkRepository.createQueryBuilder('bookmarks');
 
-    if (paginationBookmarkDto.post)
-      qb.andWhere({
-        postId: Not(IsNull()),
-      });
-    if (paginationBookmarkDto.comment)
-      qb.andWhere({
-        commentId: Not(IsNull()),
-      });
+    qb.where('bookmarks.userId = :userId', { userId });
+
+    if (paginationBookmarkDto.post) {
+      qb.leftJoinAndSelect('bookmarks.post', 'post');
+    }
+
+    if (paginationBookmarkDto.comment) {
+      qb.leftJoinAndSelect('bookmarks.comment', 'comment');
+    }
 
     if (paginationBookmarkDto.pagination.skip)
       qb.skip(paginationBookmarkDto.pagination.skip);
@@ -98,12 +97,6 @@ export class BookmarkService {
     if (paginationBookmarkDto.pagination.take)
       qb.take(paginationBookmarkDto.pagination.take);
 
-    // qb.orderBy('bookmarks.createdAt', 'DESC');
-
-    // const bookmarks = await qb.execute();
-    // console.log(bookmarks);
-
-    const bookmarks = qb.getMany();
-    return bookmarks;
+    return qb.getMany();
   }
 }
