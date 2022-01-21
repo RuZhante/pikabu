@@ -81,14 +81,20 @@ export class BookmarkService {
   ): Promise<BookmarkEntity[]> {
     const qb = this.bookmarkRepository.createQueryBuilder('bookmarks');
 
-    qb.where('bookmarks.userId = :userId', { userId });
+    // qb.where('bookmarks.userId = :userId', { userId });
 
     if (paginationBookmarkDto.post) {
-      qb.leftJoinAndSelect('bookmarks.post', 'post');
+      qb.leftJoinAndSelect('bookmarks.post', 'post').where(
+        'post.userId = :userId',
+        { userId },
+      );
     }
 
     if (paginationBookmarkDto.comment) {
-      qb.leftJoinAndSelect('bookmarks.comment', 'comment');
+      qb.leftJoinAndSelect('bookmarks.comment', 'comment').where(
+        'comment.userId = :userId',
+        { userId },
+      );
     }
 
     if (paginationBookmarkDto.pagination.skip)
