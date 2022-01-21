@@ -81,8 +81,6 @@ export class BookmarkService {
   ): Promise<BookmarkEntity[]> {
     const qb = this.bookmarkRepository.createQueryBuilder('bookmarks');
 
-    // qb.where('bookmarks.userId = :userId', { userId });
-
     if (paginationBookmarkDto.post) {
       qb.leftJoinAndSelect('bookmarks.post', 'post').where(
         'post.userId = :userId',
