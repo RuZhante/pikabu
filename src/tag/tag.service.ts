@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PostEntity } from 'src/post/post.entity';
 import { getRepository, Repository } from 'typeorm';
+import { CreateTagDto } from './dto/create-tag.dto';
 import { PostTagDto } from './dto/post-tag.dto';
 import { TagEntity } from './tag.entity';
 
@@ -47,5 +48,10 @@ export class TagService {
     }
 
     return tag;
+  }
+
+  async createTag(createTagDto: CreateTagDto): Promise<TagEntity> {
+    const tag = this.tagRepository.create(createTagDto);
+    return await this.tagRepository.save(tag);
   }
 }

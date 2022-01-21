@@ -210,6 +210,7 @@ type Mutation {
   removeCommentInBookmark(commentBookmarkDto: CommentBookmarkDto!): DeleteResultModel!
   addTagtoPost(postTagDto: PostTagDto!): TagModel!
   removeTagtoPost(postTagDto: PostTagDto!): TagModel!
+  createTag(createTagDto: CreateTagDto!): TagModel!
 }
 
 input CreateUserDto {
@@ -321,4 +322,9 @@ input PostTagDto {
 
   """TagId of the Tag"""
   tagId: Int!
+}
+
+input CreateTagDto {
+  """Tag Name"""
+  tagName: String!
 }
