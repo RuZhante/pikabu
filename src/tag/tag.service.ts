@@ -28,7 +28,12 @@ export class TagService {
       await postRepo.save(post);
     }
 
-    return tag;
+    const qb = this.tagRepository.createQueryBuilder('tags');
+    qb.leftJoinAndSelect('tags.posts', 'posts').where('posts.id IN (:...ids)', {
+      ids: [...postTagDto.postId.toString()],
+    });
+
+    return qb.getOne();
   }
 
   async removeTagtoPost(postTagDto: PostTagDto): Promise<TagEntity> {

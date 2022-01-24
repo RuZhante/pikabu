@@ -125,6 +125,9 @@ type TagModel {
 
   """Name of the tag"""
   tagName: String!
+
+  """Post with this tag"""
+  posts: [PostModel!]
 }
 
 type Query {

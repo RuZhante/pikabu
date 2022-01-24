@@ -64,8 +64,6 @@ export class PostService {
       );
       qb.orderBy('raiting', 'DESC');
       const posts = await qb.execute();
-
-      console.log(423423423423, posts);
       return posts;
     }
 
@@ -87,8 +85,6 @@ export class PostService {
 
     qb.orderBy('posts.createdAt', 'DESC');
 
-    const posts = await qb.getMany();
-
-    return posts;
+    return qb.getMany();
   }
 }
