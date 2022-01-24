@@ -1,5 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { PaginationDto } from 'src/common/pagination.dto';
+import { TagType } from 'src/tag/types/tag.types';
 
 @InputType()
 export class PostPaginationDto {
@@ -17,4 +18,7 @@ export class PostPaginationDto {
 
   @Field(() => String, { description: 'TagName of the tag', nullable: true })
   tag: string;
+
+  @Field(() => TagType, { description: 'HOT FRESH BEST', nullable: true })
+  tagType: TagType;
 }

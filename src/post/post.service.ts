@@ -83,6 +83,53 @@ export class PostService {
       }
     }
 
+    if (postPaginationDto.tagType) {
+      if (postPaginationDto.tagType.includes('FRESH')) {
+        qb.andWhere("posts.createdAt >= NOW() - '1 day'::INTERVAL");
+        qb.orderBy('posts.createdAt', 'DESC');
+        return qb.getMany();
+      }
+
+      if (postPaginationDto.tagType.includes('HOT')) {
+        qb.select('posts');
+        qb.loadRelationCountAndMap(
+          'posts.countComments',
+          'posts.comments',
+          'countComments',
+        );
+
+        const res = await qb.getMany();
+
+        console.log(res);
+
+        return res;
+        // return qb.getMany();
+
+        // const posts = await this.postRepository.find({
+        //   relations: ['comments'],
+        // });
+
+        // // const ids = posts.map((post) => {
+        // //   post.id, post.comments.length;
+        // // });
+        // posts.filter((post) => {
+        //   post.comments.filter((comment) => {
+        //     const date = new Date().getHours();
+        //     date - comment.createdAt.getHours() <= 24;
+        //   });
+        // });
+
+        // posts.sort((a, b) => a.comments.length - b.comments.length);
+        // return posts;
+      }
+
+      if (postPaginationDto.tagType.includes('BEST')) {
+        const posts = await this.postRepository.find({
+          relations: ['reactions'],
+        });
+      }
+    }
+
     qb.orderBy('posts.createdAt', 'DESC');
 
     return qb.getMany();

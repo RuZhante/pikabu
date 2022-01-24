@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { TagType } from 'src/tag/types/tag.types';
 
 @ObjectType()
 export class PostModel {
@@ -25,4 +26,7 @@ export class PostModel {
 
   @Field(() => Date, { description: 'Date of the Post updated' })
   updatedAt: Date;
+
+  @Field(() => TagType, { description: 'BEST FRESH HOT', nullable: true })
+  tagType: TagType;
 }

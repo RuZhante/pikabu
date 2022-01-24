@@ -2,8 +2,11 @@ import { BookmarkEntity } from 'src/bookmark/bookmark.entity';
 import { CommentEntity } from 'src/comment/comment.entity';
 import { ReactionEntity } from 'src/reaction/reaction.entity';
 import { TagEntity } from 'src/tag/tag.entity';
+import { TagType } from 'src/tag/types/tag.types';
 import { UserEntity } from 'src/user/user.entity';
 import {
+  AfterLoad,
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -51,4 +54,20 @@ export class PostEntity {
 
   @ManyToMany(() => TagEntity, (tag) => tag.posts)
   tags: TagEntity[];
+
+  @Column({ nullable: true })
+  tagType: TagType;
+
+  @BeforeInsert()
+  async updateTagType() {
+    this.tagType = TagType.FRESH;
+  }
+
+  @AfterLoad()
+  async setStatusInTagType() {
+    const date = new Date().getHours();
+    if (date - this.createdAt.getHours() > 24) {
+      this.tagType = null;
+    }
+  }
 }

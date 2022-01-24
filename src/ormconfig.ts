@@ -8,7 +8,7 @@ const ormconfig: ConnectionOptions = {
   password: '123',
   database: 'pikabu',
   entities: [__dirname + '/**/*.entity{.js,.ts}'],
-  synchronize: false,
+  synchronize: true,
   migrations: [__dirname + '/migration/**/*{.js,.ts}'],
   logging: true,
   cli: {

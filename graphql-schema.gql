@@ -80,6 +80,16 @@ type PostModel {
 
   """Date of the Post updated"""
   updatedAt: DateTime!
+
+  """BEST FRESH HOT"""
+  tagType: TagType
+}
+
+"""The supported tag"""
+enum TagType {
+  HOT
+  FRESH
+  BEST
 }
 
 type BookmarkModel {
@@ -163,6 +173,9 @@ input PostPaginationDto {
 
   """TagName of the tag"""
   tag: String
+
+  """HOT FRESH BEST"""
+  tagType: TagType
 }
 
 input PaginationDto {
