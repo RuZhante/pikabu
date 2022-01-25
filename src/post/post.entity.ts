@@ -54,20 +54,4 @@ export class PostEntity {
 
   @ManyToMany(() => TagEntity, (tag) => tag.posts)
   tags: TagEntity[];
-
-  @Column({ nullable: true })
-  tagType: TagType;
-
-  @BeforeInsert()
-  async updateTagType() {
-    this.tagType = TagType.FRESH;
-  }
-
-  @AfterLoad()
-  async setStatusInTagType() {
-    const date = new Date().getHours();
-    if (date - this.createdAt.getHours() > 24) {
-      this.tagType = null;
-    }
-  }
 }

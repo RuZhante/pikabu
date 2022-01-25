@@ -80,16 +80,6 @@ type PostModel {
 
   """Date of the Post updated"""
   updatedAt: DateTime!
-
-  """BEST FRESH HOT"""
-  tagType: TagType
-}
-
-"""The supported tag"""
-enum TagType {
-  HOT
-  FRESH
-  BEST
 }
 
 type BookmarkModel {
@@ -184,6 +174,13 @@ input PaginationDto {
 
   """LIMIT"""
   take: Int!
+}
+
+"""The supported tag"""
+enum TagType {
+  HOT
+  FRESH
+  BEST
 }
 
 input CommentPaginationDto {

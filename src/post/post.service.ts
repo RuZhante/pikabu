@@ -91,42 +91,37 @@ export class PostService {
       }
 
       if (postPaginationDto.tagType.includes('HOT')) {
-        qb.select('posts');
+        qb.leftJoinAndSelect('posts.comments', 'comments');
+        qb.andWhere(`comments.createdAt >= NOW() - '1 day'::INTERVAL`);
         qb.loadRelationCountAndMap(
           'posts.countComments',
           'posts.comments',
           'countComments',
         );
 
-        const res = await qb.getMany();
-
-        console.log(res);
-
-        return res;
-        // return qb.getMany();
-
-        // const posts = await this.postRepository.find({
-        //   relations: ['comments'],
-        // });
-
-        // // const ids = posts.map((post) => {
-        // //   post.id, post.comments.length;
-        // // });
-        // posts.filter((post) => {
-        //   post.comments.filter((comment) => {
-        //     const date = new Date().getHours();
-        //     date - comment.createdAt.getHours() <= 24;
-        //   });
-        // });
-
-        // posts.sort((a, b) => a.comments.length - b.comments.length);
-        // return posts;
+        const posts: any[] = await qb.getMany();
+        posts.sort((a, b) => b.countComments - a.countComments);
+        // console.log(posts);
+        return posts;
       }
 
       if (postPaginationDto.tagType.includes('BEST')) {
-        const posts = await this.postRepository.find({
-          relations: ['reactions'],
-        });
+        qb.leftJoinAndSelect(
+          'posts.reactions',
+          'reactions',
+          `reactions.createdAt >= NOW() - '1 day'::INTERVAL`,
+        );
+        qb.andWhere(`reactions.reaction = 'LIKE'`);
+        qb.loadRelationCountAndMap(
+          'posts.countReactions',
+          'posts.reactions',
+          'countReactions',
+        );
+        const posts: any[] = await qb.getMany();
+        posts.sort((a, b) => b.countReactions - a.countReactions);
+        // console.log(posts);
+
+        return posts;
       }
     }
 
