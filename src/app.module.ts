@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { GraphQLModule } from '@nestjs/graphql';
-import configuration from './config/configuration';
+import * as configuration from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import ormconfig from 'src/ormconfig';
 import { AuthModule } from './auth/auth.module';
@@ -16,9 +16,11 @@ import { AuthModule } from './auth/auth.module';
       playground: true,
     }),
     ConfigModule.forRoot({
-      envFilePath: './.env',
+      // envFilePath: './.env',
       isGlobal: true,
-      load: [configuration],
+      load: [configuration.configuration],
+      validationSchema: configuration.validationSchema,
+      validationOptions: configuration.validationOptions,
     }),
     { module: AuthModule, global: true },
     UserModule,
