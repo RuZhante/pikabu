@@ -1,6 +1,6 @@
 import { CreateDateColumn, DeleteDateColumn, UpdateDateColumn } from 'typeorm';
 
-export abstract class BaseEntity {
+export abstract class Base {
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 

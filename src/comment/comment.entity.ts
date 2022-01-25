@@ -1,19 +1,18 @@
 import { BookmarkEntity } from 'src/bookmark/bookmark.entity';
+import { Base } from 'src/common/entityes/base.entity';
 import { PostEntity } from 'src/post/post.entity';
 import { ReactionEntity } from 'src/reaction/reaction.entity';
 import { UserEntity } from 'src/user/user.entity';
 import {
   Column,
-  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'comments' })
-export class CommentEntity {
+export class CommentEntity extends Base {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -28,12 +27,6 @@ export class CommentEntity {
 
   @Column()
   userId: number;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 
   @ManyToOne(() => PostEntity, (post) => post.comments)
   post: PostEntity;

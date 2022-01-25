@@ -1,5 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { CommentEntity } from 'src/comment/comment.entity';
+import { Base } from 'src/common/entityes/base.entity';
 import { PostEntity } from 'src/post/post.entity';
 import {
   BeforeInsert,
@@ -10,7 +11,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'users' })
-export class UserEntity {
+export class UserEntity extends Base {
   @PrimaryGeneratedColumn()
   id: number;
 

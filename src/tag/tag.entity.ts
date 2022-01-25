@@ -1,3 +1,4 @@
+import { Base } from 'src/common/entityes/base.entity';
 import { PostEntity } from 'src/post/post.entity';
 import {
   Column,
@@ -8,7 +9,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'tags' })
-export class TagEntity {
+export class TagEntity extends Base {
   @PrimaryGeneratedColumn()
   id: number;
 

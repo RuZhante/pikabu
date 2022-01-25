@@ -1,9 +1,10 @@
 import { CommentEntity } from 'src/comment/comment.entity';
+import { Base } from 'src/common/entityes/base.entity';
 import { PostEntity } from 'src/post/post.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'bookmarks' })
-export class BookmarkEntity {
+export class BookmarkEntity extends Base {
   @PrimaryGeneratedColumn()
   id: number;
 

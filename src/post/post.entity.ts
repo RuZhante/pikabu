@@ -1,24 +1,20 @@
 import { BookmarkEntity } from 'src/bookmark/bookmark.entity';
 import { CommentEntity } from 'src/comment/comment.entity';
+import { Base } from 'src/common/entityes/base.entity';
 import { ReactionEntity } from 'src/reaction/reaction.entity';
 import { TagEntity } from 'src/tag/tag.entity';
-import { TagType } from 'src/tag/types/tag.types';
 import { UserEntity } from 'src/user/user.entity';
 import {
-  AfterLoad,
-  BeforeInsert,
   Column,
-  CreateDateColumn,
   Entity,
   ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'posts' })
-export class PostEntity {
+export class PostEntity extends Base {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -33,12 +29,6 @@ export class PostEntity {
 
   @Column()
   userId: number;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 
   @ManyToOne(() => UserEntity, (user) => user.posts)
   user: UserEntity;

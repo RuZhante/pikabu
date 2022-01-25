@@ -1,10 +1,10 @@
 import { CommentEntity } from 'src/comment/comment.entity';
-import { BaseEntity } from 'src/common/entityes/base.entity';
+import { Base } from 'src/common/entityes/base.entity';
 import { PostEntity } from 'src/post/post.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'reactions' })
-export class ReactionEntity extends BaseEntity {
+export class ReactionEntity extends Base {
   @PrimaryGeneratedColumn()
   id: number;
 
