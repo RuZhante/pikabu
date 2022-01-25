@@ -25,4 +25,10 @@ export class PostModel {
 
   @Field(() => Date, { description: 'Date of the Post updated' })
   updatedAt: Date;
+
+  @Field(() => Int, { description: 'Count Reactions', nullable: true })
+  countReactions: number;
+
+  @Field(() => Int, { description: 'Count Comments', nullable: true })
+  countComments: number;
 }

@@ -85,14 +85,14 @@ export class PostService {
 
     if (postPaginationDto.tagType) {
       if (postPaginationDto.tagType.includes('FRESH')) {
-        qb.andWhere("posts.createdAt >= NOW() - '1 day'::INTERVAL");
+        qb.andWhere(`posts.createdAt >= NOW() - INTERVAL '1 DAY'`);
         qb.orderBy('posts.createdAt', 'DESC');
         return qb.getMany();
       }
 
       if (postPaginationDto.tagType.includes('HOT')) {
         qb.leftJoinAndSelect('posts.comments', 'comments');
-        qb.andWhere(`comments.createdAt >= NOW() - '1 day'::INTERVAL`);
+        qb.andWhere(`comments.createdAt >= NOW() - INTERVAL '1 DAY'`);
         qb.loadRelationCountAndMap(
           'posts.countComments',
           'posts.comments',
@@ -101,7 +101,6 @@ export class PostService {
 
         const posts: any[] = await qb.getMany();
         posts.sort((a, b) => b.countComments - a.countComments);
-        // console.log(posts);
         return posts;
       }
 
@@ -109,7 +108,7 @@ export class PostService {
         qb.leftJoinAndSelect(
           'posts.reactions',
           'reactions',
-          `reactions.createdAt >= NOW() - '1 day'::INTERVAL`,
+          `reactions.createdAt >= NOW() - INTERVAL '1 DAY'`,
         );
         qb.andWhere(`reactions.reaction = 'LIKE'`);
         qb.loadRelationCountAndMap(
@@ -119,8 +118,6 @@ export class PostService {
         );
         const posts: any[] = await qb.getMany();
         posts.sort((a, b) => b.countReactions - a.countReactions);
-        // console.log(posts);
-
         return posts;
       }
     }

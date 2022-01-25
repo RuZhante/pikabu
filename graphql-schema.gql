@@ -80,6 +80,12 @@ type PostModel {
 
   """Date of the Post updated"""
   updatedAt: DateTime!
+
+  """Count Reactions"""
+  countReactions: Int
+
+  """Count Comments"""
+  countComments: Int
 }
 
 type BookmarkModel {
