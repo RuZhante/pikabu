@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { BookmarkEntity } from './bookmark.entity';
 import { CommentBookmarkDto } from './dto/comment-bookmark.dto';
 import { PaginationBookmarkDto } from './dto/pagination-bookmark.dto';
@@ -34,14 +34,14 @@ export class BookmarkService {
   async removePostInBookmark(
     postBookmarkDto: PostBookmarkDto,
     userId: number,
-  ): Promise<DeleteResult> {
+  ): Promise<BookmarkEntity> {
     const bookmark = await this.bookmarkRepository.findOne({
       where: { postId: postBookmarkDto.postId, userid: userId },
     });
 
     if (!bookmark) throw new NotFoundException('Bookmark does not exist');
 
-    return await this.bookmarkRepository.delete(bookmark);
+    return await this.bookmarkRepository.remove(bookmark);
   }
 
   // Comment methods
@@ -65,14 +65,14 @@ export class BookmarkService {
   async removeCommentInBookmark(
     commentBookmarkDto: CommentBookmarkDto,
     userId: number,
-  ): Promise<DeleteResult> {
+  ): Promise<BookmarkEntity> {
     const bookmark = await this.bookmarkRepository.findOne({
       where: { commentId: commentBookmarkDto.commentId, userid: userId },
     });
 
     if (!bookmark) throw new NotFoundException('Bookmark does not exist');
 
-    return await this.bookmarkRepository.delete(bookmark);
+    return await this.bookmarkRepository.remove(bookmark);
   }
 
   async paginationBookmark(

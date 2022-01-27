@@ -2,10 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type DeleteResultModel {
-  affected: Float
-}
-
 type UserModel {
   """Id of the user"""
   id: Int!
@@ -15,9 +11,6 @@ type UserModel {
 
   """Email of the user"""
   email: String!
-
-  """Password of the user"""
-  password: String!
 }
 
 type AccessTokenModel {
@@ -214,19 +207,19 @@ input PaginationBookmarkDto {
 type Mutation {
   createUser(createUserDto: CreateUserDto!): UserModel!
   updateUser(updateUserDto: UpdateUserDto!): UserModel!
-  removeUser(id: Int!): DeleteResultModel!
+  removeUser(id: Int!): UserModel!
   createPost(createPostDto: CreatePostDto!): PostModel!
   updatePost(updatePostDto: UpdatePostDto!): PostModel!
-  removePost(id: Int!): DeleteResultModel!
+  removePost(id: Int!): PostModel!
   createComment(createCommentDto: CreateCommentDto!): CommentModel!
   updateComment(updateCommentDto: UpdateCommentDto!): CommentModel!
-  removeComment(id: Int!): DeleteResultModel!
+  removeComment(id: Int!): CommentModel!
   reactionPost(reactionPostDto: ReactionPostDto!): ReactionModel!
   reactionComment(reactionCommentDto: ReactionCommentDto!): ReactionModel!
   addPostInBookmark(postBookmarkDto: PostBookmarkDto!): BookmarkModel!
-  removePostInBookmark(postBookmarkDto: PostBookmarkDto!): DeleteResultModel!
+  removePostInBookmark(postBookmarkDto: PostBookmarkDto!): BookmarkModel!
   addCommentInBookmark(commentBookmarkDto: CommentBookmarkDto!): BookmarkModel!
-  removeCommentInBookmark(commentBookmarkDto: CommentBookmarkDto!): DeleteResultModel!
+  removeCommentInBookmark(commentBookmarkDto: CommentBookmarkDto!): BookmarkModel!
   addTagtoPost(postTagDto: PostTagDto!): TagModel!
   removeTagtoPost(postTagDto: PostTagDto!): TagModel!
   createTag(createTagDto: CreateTagDto!): TagModel!

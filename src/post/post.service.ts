@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TagEntity } from 'src/tag/tag.entity';
-import { DeleteResult, getRepository, Repository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostPaginationDto } from './dto/post-pagination.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -18,7 +18,7 @@ export class PostService {
     createPostDto: CreatePostDto,
     userId: number,
   ): Promise<PostEntity> {
-    const post = await this.postRepository.create(createPostDto);
+    const post = this.postRepository.create(createPostDto);
     post.userId = userId;
     return await this.postRepository.save(post);
   }
@@ -27,9 +27,9 @@ export class PostService {
     return await this.postRepository.save(updatePostDto);
   }
 
-  async remove(postId: number): Promise<DeleteResult> {
+  async remove(postId: number): Promise<PostEntity> {
     const post = await this.postRepository.findOne(postId);
-    return await this.postRepository.delete(post);
+    return await this.postRepository.remove(post);
   }
 
   async findAll(): Promise<PostEntity[]> {

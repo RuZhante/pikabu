@@ -2,7 +2,6 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Int, Mutation, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/guards/graphql-auth.guard';
 import { CurrentUser } from 'src/common/currentUser.decorator';
-import { DeleteResultModel } from 'src/common/delete-result.graphql';
 import { UserEntity } from 'src/user/user.entity';
 import { CreatePostDto } from '../dto/create-post.dto';
 import { UpdatePostDto } from '../dto/update-post.dto';
@@ -28,7 +27,7 @@ export class PostMutationResolver {
     return this.postService.update(updatePostDto);
   }
 
-  @Mutation(() => DeleteResultModel)
+  @Mutation(() => PostModel)
   @UseGuards(GqlAuthGuard)
   removePost(@Args('id', { type: () => Int }) postId: number) {
     return this.postService.remove(postId);

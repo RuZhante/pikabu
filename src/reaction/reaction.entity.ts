@@ -20,9 +20,13 @@ export class ReactionEntity extends Base {
   @Column()
   reaction: string;
 
-  @ManyToOne(() => PostEntity, (post) => post.reactions)
+  @ManyToOne(() => PostEntity, (post) => post.reactions, {
+    onDelete: 'CASCADE',
+  })
   post: PostEntity;
 
-  @ManyToOne(() => CommentEntity, (comment) => comment.reactions)
+  @ManyToOne(() => CommentEntity, (comment) => comment.reactions, {
+    onDelete: 'CASCADE',
+  })
   comment: CommentEntity;
 }
