@@ -18,10 +18,6 @@ type AccessTokenModel {
   access_token: String!
 }
 
-type DeleteResultModel {
-  affected: Float
-}
-
 type CommentModel {
   """Id of the comment"""
   id: Int!
@@ -221,9 +217,9 @@ type Mutation {
   reactionPost(reactionPostDto: ReactionPostDto!): ReactionModel!
   reactionComment(reactionCommentDto: ReactionCommentDto!): ReactionModel!
   addPostInBookmark(postBookmarkDto: PostBookmarkDto!): BookmarkModel!
-  removePostInBookmark(postBookmarkDto: PostBookmarkDto!): DeleteResultModel!
+  removePostInBookmark(postBookmarkDto: PostBookmarkDto!): BookmarkModel!
   addCommentInBookmark(commentBookmarkDto: CommentBookmarkDto!): BookmarkModel!
-  removeCommentInBookmark(commentBookmarkDto: CommentBookmarkDto!): DeleteResultModel!
+  removeCommentInBookmark(commentBookmarkDto: CommentBookmarkDto!): BookmarkModel!
   addTagtoPost(postTagDto: PostTagDto!): TagModel!
   removeTagtoPost(postTagDto: PostTagDto!): TagModel!
   createTag(createTagDto: CreateTagDto!): TagModel!
