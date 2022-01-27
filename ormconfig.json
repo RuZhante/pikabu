@@ -1,0 +1,11 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "pikabu",
+  "password": "123",
+  "database": "pikabu",
+  "entities": ["src/**/*.entity.ts"],
+  "synchronize": true,
+  "seeds": ["src/database/seeds/**/*.seed.ts"]
+}
