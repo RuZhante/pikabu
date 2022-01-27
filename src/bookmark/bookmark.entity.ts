@@ -17,9 +17,13 @@ export class BookmarkEntity extends Base {
   @Column({ nullable: true })
   commentId: number;
 
-  @ManyToOne(() => PostEntity, (post) => post.bookmarks)
+  @ManyToOne(() => PostEntity, (post) => post.bookmarks, {
+    onDelete: 'CASCADE',
+  })
   post: PostEntity;
 
-  @ManyToOne(() => CommentEntity, (comment) => comment.bookmarks)
+  @ManyToOne(() => CommentEntity, (comment) => comment.bookmarks, {
+    onDelete: 'CASCADE',
+  })
   comment: CommentEntity;
 }

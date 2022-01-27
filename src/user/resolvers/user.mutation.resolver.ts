@@ -1,7 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Int, Mutation, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/guards/graphql-auth.guard';
-import { DeleteResultModel } from 'src/common/delete-result.graphql';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UserModel } from '../graphql.models/user.graphql';
@@ -22,9 +21,9 @@ export class UserMutationResolver {
     return this.userService.update(updateUserDto);
   }
 
-  @Mutation(() => DeleteResultModel)
+  @Mutation(() => UserModel)
   @UseGuards(GqlAuthGuard)
-  removeUser(@Args('id', { type: () => Int }) userId: number) {
-    return this.userService.remove(userId);
+  async removeUser(@Args('id', { type: () => Int }) userId: number) {
+    return await this.userService.remove(userId);
   }
 }

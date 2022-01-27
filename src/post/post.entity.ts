@@ -30,7 +30,7 @@ export class PostEntity extends Base {
   @Column()
   userId: number;
 
-  @ManyToOne(() => UserEntity, (user) => user.posts)
+  @ManyToOne(() => UserEntity, (user) => user.posts, { onDelete: 'CASCADE' })
   user: UserEntity;
 
   @OneToMany(() => CommentEntity, (comment) => comment.post)

@@ -1,7 +1,5 @@
 import * as Joi from '@hapi/joi';
 
-console.log(Joi);
-
 export const validationSchema = Joi.object({
   PORT: Joi.number().port().required(),
   // jwt

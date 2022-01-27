@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CommentEntity } from './comment.entity';
 import { CommentPaginationDto } from './dto/comment-pagination.dto';
 import { CreateCommentDto } from './dto/create-comment.dto';
@@ -26,9 +26,9 @@ export class CommentService {
     return await this.commentRepository.save(updateCommentDto);
   }
 
-  async remove(commentId: number): Promise<DeleteResult> {
+  async remove(commentId: number): Promise<CommentEntity> {
     const comment = await this.commentRepository.findOne(commentId);
-    return await this.commentRepository.delete(comment);
+    return await this.commentRepository.remove(comment);
   }
 
   async findAll(): Promise<CommentEntity[]> {

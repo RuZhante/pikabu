@@ -2,7 +2,6 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Int, Mutation, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/guards/graphql-auth.guard';
 import { CurrentUser } from 'src/common/currentUser.decorator';
-import { DeleteResultModel } from 'src/common/delete-result.graphql';
 import { UserEntity } from 'src/user/user.entity';
 import { CommentService } from '../comment.service';
 import { CreateCommentDto } from '../dto/create-comment.dto';
@@ -28,7 +27,7 @@ export class CommentMutationResolver {
     return this.commentService.update(updateCommentDto);
   }
 
-  @Mutation(() => DeleteResultModel)
+  @Mutation(() => CommentModel)
   @UseGuards(GqlAuthGuard)
   removeComment(@Args('id', { type: () => Int }) commentId: number) {
     return this.commentService.remove(commentId);

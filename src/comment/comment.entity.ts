@@ -28,10 +28,10 @@ export class CommentEntity extends Base {
   @Column()
   userId: number;
 
-  @ManyToOne(() => PostEntity, (post) => post.comments)
+  @ManyToOne(() => PostEntity, (post) => post.comments, { onDelete: 'CASCADE' })
   post: PostEntity;
 
-  @ManyToOne(() => UserEntity, (user) => user.comments)
+  @ManyToOne(() => UserEntity, (user) => user.comments, { onDelete: 'CASCADE' })
   user: UserEntity;
 
   @OneToMany(() => ReactionEntity, (reaction) => reaction.comment)
