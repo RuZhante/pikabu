@@ -17,7 +17,7 @@ export class CommentService {
     createCommentDto: CreateCommentDto,
     userId: number,
   ): Promise<CommentEntity> {
-    const comment = await this.commentRepository.create(createCommentDto);
+    const comment = this.commentRepository.create(createCommentDto);
     comment.userId = userId;
     return await this.commentRepository.save(comment);
   }
@@ -55,21 +55,23 @@ export class CommentService {
       qb.take(commentPaginationDto.pagination.take);
 
     if (commentPaginationDto.countLikes) {
-      qb.leftJoin('comments.reactions', 'reactions');
-      qb.groupBy('comments.id');
-      qb.select(
-        `comments.id as id, comments.postId as postId, comments.userId as userId, comments.text as text, comments.image as image, sum(case reaction when 'LIKE' then 1 else 0 end) as raiting`,
+      qb.leftJoinAndSelect(
+        'comments.reactions',
+        'reactions',
+        `reactions.reaction = 'LIKE'`,
       );
-      qb.orderBy('raiting', 'DESC');
-      const comments = await qb.execute();
+      qb.loadRelationCountAndMap(
+        'comments.countReactions',
+        'comments.reactions',
+        'countReactions',
+      );
 
-      console.log(423423423423, comments);
+      const comments: any[] = await qb.getMany();
+      comments.sort((a, b) => b.countReactions - a.countReactions);
       return comments;
     }
 
     qb.orderBy('comments.createdAt', 'DESC');
-
-    const comments = qb.getMany();
-    return comments;
+    return qb.getMany();
   }
 }

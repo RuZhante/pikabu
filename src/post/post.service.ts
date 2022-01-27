@@ -57,13 +57,19 @@ export class PostService {
       });
 
     if (postPaginationDto.countLikes) {
-      qb.leftJoin('posts.reactions', 'reactions');
-      qb.groupBy('posts.id');
-      qb.select(
-        `posts.id as id, posts.userId as userId, posts.title as title, posts.description as description, posts.image as image, sum(case reaction when 'LIKE' then 1 else 0 end) as raiting`,
+      qb.leftJoinAndSelect(
+        'posts.reactions',
+        'reactions',
+        `reactions.reaction = 'LIKE'`,
       );
-      qb.orderBy('raiting', 'DESC');
-      const posts = await qb.execute();
+      qb.loadRelationCountAndMap(
+        'posts.countReactions',
+        'posts.reactions',
+        'countReactions',
+      );
+
+      const posts: any[] = await qb.getMany();
+      posts.sort((a, b) => b.countReactions - a.countReactions);
       return posts;
     }
 

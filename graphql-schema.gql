@@ -35,7 +35,7 @@ type CommentModel {
   userId: Int!
 
   """Count likes of the comment"""
-  raiting: Int
+  countReactions: Int
 
   """Date of the comment created"""
   createdAt: DateTime!
