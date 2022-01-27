@@ -1,4 +1,6 @@
-import Joi from '@hapi/joi';
+import * as Joi from '@hapi/joi';
+
+console.log(Joi);
 
 export const validationSchema = Joi.object({
   PORT: Joi.number().port().required(),
@@ -6,11 +8,11 @@ export const validationSchema = Joi.object({
   JWT_SECRET_KEY: Joi.string().required(),
 
   // database
-  DB_HOST: Joi.string().hostname().required(),
-  DB_PORT: Joi.number().port().required(),
-  DB_NAME: Joi.string().required(),
-  DB_USERNAME: Joi.string().required(),
-  DB_PASSWORD: Joi.string().required(),
+  POSTGRES_HOST: Joi.string().required(),
+  POSTGRES_PORT: Joi.number().port().required(),
+  POSTGRES_DB: Joi.string().required(),
+  POSTGRES_USER: Joi.string().required(),
+  POSTGRES_PASSWORD: Joi.string().required(),
 });
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -19,11 +21,11 @@ export const configuration = () => ({
   port: parseInt(process.env.PORT),
   jwtSecretKey: process.env.JWT_SECRET_KEY,
   database: {
-    host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT),
-    name: process.env.DB_NAME,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
+    host: process.env.POSTGRES_HOST,
+    port: parseInt(process.env.POSTGRES_PORT),
+    name: process.env.POSTGRES_DB,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
   },
 });
 
