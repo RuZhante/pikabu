@@ -4,6 +4,7 @@ import { TagEntity } from 'src/tag/tag.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
+import * as bcrypt from 'bcrypt';
 
 export default class CreateSeeds implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
@@ -12,9 +13,21 @@ export default class CreateSeeds implements Seeder {
       .insert()
       .into(UserEntity)
       .values([
-        { username: 'Max', email: 'max@email.com', password: '123' },
-        { username: 'Jone', email: 'jone@email.com', password: '123' },
-        { username: 'Bill', email: 'bill@email.com', password: '123' },
+        {
+          username: 'Max',
+          email: 'max@email.com',
+          password: `${await bcrypt.hash('123', 10)}`,
+        },
+        {
+          username: 'Jone',
+          email: 'jone@email.com',
+          password: `${await bcrypt.hash('123', 10)}`,
+        },
+        {
+          username: 'Bill',
+          email: 'bill@email.com',
+          password: `${await bcrypt.hash('123', 10)}`,
+        },
       ])
       .execute();
 
