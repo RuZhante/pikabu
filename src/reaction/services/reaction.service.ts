@@ -1,16 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { ReactionCommentDto } from './dto/reaction-comment.dto';
-import { ReactionPostDto } from './dto/reaction-post.dto';
-import { ReactionEntity } from './reaction.entity';
+import { ReactionCommentDto } from '../dto/reaction-comment.dto';
+import { ReactionPostDto } from '../dto/reaction-post.dto';
+import { ReactionEntity } from '../reaction.entity';
+import { ReactionRepository } from '../reaction.repository';
 
 @Injectable()
 export class ReactionService {
-  constructor(
-    @InjectRepository(ReactionEntity)
-    private readonly reactionRepository: Repository<ReactionEntity>,
-  ) {}
+  constructor(private readonly reactionRepository: ReactionRepository) {}
 
   async reactionPost(
     reactionPostDto: ReactionPostDto,

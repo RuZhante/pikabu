@@ -1,17 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { BookmarkEntity } from './bookmark.entity';
-import { CommentBookmarkDto } from './dto/comment-bookmark.dto';
-import { PaginationBookmarkDto } from './dto/pagination-bookmark.dto';
-import { PostBookmarkDto } from './dto/post-bookmark.dto';
+import { BookmarkEntity } from '../bookmark.entity';
+import { BookmarkRepository } from '../bookmark.repository';
+import { CommentBookmarkDto } from '../dto/comment-bookmark.dto';
+import { PaginationBookmarkDto } from '../dto/pagination-bookmark.dto';
+import { PostBookmarkDto } from '../dto/post-bookmark.dto';
 
 @Injectable()
 export class BookmarkService {
-  constructor(
-    @InjectRepository(BookmarkEntity)
-    private readonly bookmarkRepository: Repository<BookmarkEntity>,
-  ) {}
+  constructor(private readonly bookmarkRepository: BookmarkRepository) {}
 
   // Post methods
   async addPostInBookmark(
@@ -79,28 +75,9 @@ export class BookmarkService {
     userId: number,
     paginationBookmarkDto: PaginationBookmarkDto,
   ): Promise<BookmarkEntity[]> {
-    const qb = this.bookmarkRepository.createQueryBuilder('bookmarks');
-
-    if (paginationBookmarkDto.post) {
-      qb.leftJoinAndSelect('bookmarks.post', 'post').where(
-        'post.userId = :userId',
-        { userId },
-      );
-    }
-
-    if (paginationBookmarkDto.comment) {
-      qb.leftJoinAndSelect('bookmarks.comment', 'comment').where(
-        'comment.userId = :userId',
-        { userId },
-      );
-    }
-
-    if (paginationBookmarkDto.pagination.skip)
-      qb.skip(paginationBookmarkDto.pagination.skip);
-
-    if (paginationBookmarkDto.pagination.take)
-      qb.take(paginationBookmarkDto.pagination.take);
-
-    return qb.getMany();
+    return this.bookmarkRepository.paginationBookmark(
+      userId,
+      paginationBookmarkDto,
+    );
   }
 }

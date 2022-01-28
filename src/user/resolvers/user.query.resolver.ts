@@ -5,7 +5,7 @@ import { GqlAuthGuard } from 'src/auth/guards/graphql-auth.guard';
 import { AccessTokenModel } from '../../auth/access-token.graphql';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { UserModel } from '../graphql.models/user.graphql';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 
 @Resolver(() => UserModel)
 export class UserQueryResolver {

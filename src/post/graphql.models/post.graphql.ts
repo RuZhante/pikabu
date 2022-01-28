@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { TagModel } from 'src/tag/graphql.models/tag.graphql';
 
 @ObjectType()
 export class PostModel {
@@ -18,7 +19,7 @@ export class PostModel {
   userId: number;
 
   @Field(() => Int, { description: 'Count likes of the Post', nullable: true })
-  raiting: number;
+  countr: number;
 
   @Field(() => Date, { description: 'Date of the Post created' })
   createdAt: Date;
@@ -26,9 +27,6 @@ export class PostModel {
   @Field(() => Date, { description: 'Date of the Post updated' })
   updatedAt: Date;
 
-  @Field(() => Int, { description: 'Count Reactions', nullable: true })
-  countReactions: number;
-
-  @Field(() => Int, { description: 'Count Comments', nullable: true })
-  countComments: number;
+  @Field(() => [TagModel], { description: 'Tag', nullable: true })
+  tags?: TagModel[];
 }

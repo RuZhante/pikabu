@@ -4,7 +4,7 @@ import { GqlAuthGuard } from 'src/auth/guards/graphql-auth.guard';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UserModel } from '../graphql.models/user.graphql';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 
 @Resolver(() => UserModel)
 export class UserMutationResolver {

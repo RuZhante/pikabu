@@ -7,7 +7,7 @@ import { ReactionCommentDto } from '../dto/reaction-comment.dto';
 import { ReactionPostDto } from '../dto/reaction-post.dto';
 import { ReactionModel } from '../graphql.models/reaction.graphql';
 import { ReactionEntity } from '../reaction.entity';
-import { ReactionService } from '../reaction.service';
+import { ReactionService } from '../services/reaction.service';
 
 @Resolver(() => ReactionModel)
 export class ReactionMutationResolver {

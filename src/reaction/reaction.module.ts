@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ReactionEntity } from './reaction.entity';
-import { ReactionService } from './reaction.service';
+import { ReactionService } from './services/reaction.service';
 import { ReactionMutationResolver } from './resolvers/reaction.mutation.resolver';
+import { ReactionRepository } from './reaction.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ReactionEntity])],
+  imports: [TypeOrmModule.forFeature([ReactionRepository])],
   providers: [ReactionService, ReactionMutationResolver],
 })
 export class ReactionModule {}

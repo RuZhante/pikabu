@@ -6,7 +6,7 @@ import { UserEntity } from 'src/user/user.entity';
 import { CreatePostDto } from '../dto/create-post.dto';
 import { UpdatePostDto } from '../dto/update-post.dto';
 import { PostModel } from '../graphql.models/post.graphql';
-import { PostService } from '../post.service';
+import { PostService } from '../services/post.service';
 
 @Resolver(() => PostModel)
 export class PostMutationResolver {

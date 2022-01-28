@@ -6,6 +6,11 @@ import * as configuration from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmConfigService } from './common/services/typeorm-config.service';
+import { BookmarkModule } from './bookmark/bookmark.module';
+import { TagModule } from './tag/tag.module';
+import { CommentModule } from './comment/comment.module';
+import { PostModule } from './post/post.module';
+import { ReactionModule } from './reaction/reaction.module';
 
 @Module({
   imports: [
@@ -25,6 +30,11 @@ import { TypeOrmConfigService } from './common/services/typeorm-config.service';
     }),
     { module: AuthModule, global: true },
     UserModule,
+    PostModule,
+    CommentModule,
+    TagModule,
+    BookmarkModule,
+    ReactionModule,
   ],
 })
 export class AppModule {}
