@@ -21,7 +21,7 @@ export class CommentModel {
     description: 'Count likes of the comment',
     nullable: true,
   })
-  countReactions: number;
+  countr: number;
 
   @Field(() => Date, { description: 'Date of the comment created' })
   createdAt: Date;

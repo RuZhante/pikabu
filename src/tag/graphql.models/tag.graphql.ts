@@ -1,10 +1,8 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { PostModel } from 'src/post/graphql.models/post.graphql';
-import { TagService } from '../tag.service';
 
 @ObjectType()
 export class TagModel {
-  constructor(private readonly tagService: TagService) {}
   @Field(() => Int, { description: 'Id of the tag' })
   id: number;
 

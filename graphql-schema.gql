@@ -18,36 +18,16 @@ type AccessTokenModel {
   access_token: String!
 }
 
-type CommentModel {
-  """Id of the comment"""
+type TagModel {
+  """Id of the tag"""
   id: Int!
 
-  """Text of the comment"""
-  text: String!
+  """Name of the tag"""
+  tagName: String!
 
-  """Image of the comment"""
-  image: String
-
-  """PostId of the comment"""
-  postId: Int!
-
-  """UserId of the comment"""
-  userId: Int!
-
-  """Count likes of the comment"""
-  countReactions: Int
-
-  """Date of the comment created"""
-  createdAt: DateTime!
-
-  """Date of the comment updated"""
-  updatedAt: DateTime!
+  """Post with this tag"""
+  posts: [PostModel!]
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type PostModel {
   """Id of the Post"""
@@ -66,7 +46,7 @@ type PostModel {
   userId: Int!
 
   """Count likes of the Post"""
-  raiting: Int
+  countr: Int
 
   """Date of the Post created"""
   createdAt: DateTime!
@@ -74,11 +54,39 @@ type PostModel {
   """Date of the Post updated"""
   updatedAt: DateTime!
 
-  """Count Reactions"""
-  countReactions: Int
+  """Tag"""
+  tags: [TagModel!]
+}
 
-  """Count Comments"""
-  countComments: Int
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type CommentModel {
+  """Id of the comment"""
+  id: Int!
+
+  """Text of the comment"""
+  text: String!
+
+  """Image of the comment"""
+  image: String
+
+  """PostId of the comment"""
+  postId: Int!
+
+  """UserId of the comment"""
+  userId: Int!
+
+  """Count likes of the comment"""
+  countr: Int
+
+  """Date of the comment created"""
+  createdAt: DateTime!
+
+  """Date of the comment updated"""
+  updatedAt: DateTime!
 }
 
 type BookmarkModel {
@@ -116,17 +124,6 @@ type ReactionModel {
 
   """Reaction LIKE/DISLIKE"""
   reaction: String!
-}
-
-type TagModel {
-  """Id of the tag"""
-  id: Int!
-
-  """Name of the tag"""
-  tagName: String!
-
-  """Post with this tag"""
-  posts: [PostModel!]
 }
 
 type Query {

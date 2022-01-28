@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { UserService } from './user.service';
+import { UserService } from './services/user.service';
 import { UserMutationResolver } from './resolvers/user.mutation.resolver';
 import { UserQueryResolver } from './resolvers/user.query.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from './user.entity';
 import { PostModule } from 'src/post/post.module';
+import { UserRepositoy } from './user.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity]), PostModule],
+  imports: [TypeOrmModule.forFeature([UserRepositoy]), PostModule],
   providers: [UserService, UserMutationResolver, UserQueryResolver],
   exports: [UserService],
 })

@@ -1,14 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CommentModule } from 'src/comment/comment.module';
-import { PostEntity } from './post.entity';
 import { PostMutationResolver } from './resolvers/post.mutation.resolver';
 import { PostQueryResolver } from './resolvers/post.query.resolver';
-import { PostService } from './post.service';
-import { TagModule } from 'src/tag/tag.module';
+import { PostService } from './services/post.service';
+import { PostRepository } from './post.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PostEntity]), CommentModule, TagModule],
+  imports: [TypeOrmModule.forFeature([PostRepository])],
   providers: [PostService, PostMutationResolver, PostQueryResolver],
   exports: [PostService],
 })

@@ -4,7 +4,7 @@ import { GqlAuthGuard } from 'src/auth/guards/graphql-auth.guard';
 import { CreateTagDto } from '../dto/create-tag.dto';
 import { PostTagDto } from '../dto/post-tag.dto';
 import { TagModel } from '../graphql.models/tag.graphql';
-import { TagService } from '../tag.service';
+import { TagService } from '../services/tag.service';
 
 @Resolver(() => TagModel)
 export class TagMutationResolver {

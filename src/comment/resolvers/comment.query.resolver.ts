@@ -1,7 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Int, Query, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/guards/graphql-auth.guard';
-import { CommentService } from '../comment.service';
+import { CommentService } from '../services/comment.service';
 import { CommentPaginationDto } from '../dto/comment-pagination.dto';
 import { CommentModel } from '../graphql.models/comment.graphql';
 

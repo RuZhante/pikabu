@@ -3,7 +3,7 @@ import { Resolver, Query, Args } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/guards/graphql-auth.guard';
 import { CurrentUser } from 'src/common/currentUser.decorator';
 import { UserEntity } from 'src/user/user.entity';
-import { BookmarkService } from '../bookmark.service';
+import { BookmarkService } from '../services/bookmark.service';
 import { PaginationBookmarkDto } from '../dto/pagination-bookmark.dto';
 import { BookmarkModel } from '../graphql.models/bookmark.graphql';
 
